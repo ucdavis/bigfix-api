@@ -18,7 +18,7 @@ steps:
 #     command: test
 #     arguments: '--configuration $(BuildConfiguration)'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: 'src/bigfix/*.csproj'
