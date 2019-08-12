@@ -6,10 +6,12 @@ namespace Bigfix
     public class ComputerResult {
         public ComputerResult(ComputerResponse response)
         {
+            AllProperties = response.Properties;
             OS = response.Properties.SingleOrDefault(r => r.Name.Equals("OS", System.StringComparison.OrdinalIgnoreCase))?.Value;           
         }
 
         public string OS { get; }
+        public BigfixProperty[] AllProperties { get; }
     }
 
     [XmlRoot("BESAPI")]
