@@ -10,7 +10,7 @@ namespace Bigfix
 
         public async Task<ComputerResults> Get(string id)
         {
-            this.Url = "computers/" + id;
+            this.Url = "computer/" + id;
 
             return await this.GetAsync<ComputerResults>();
         }

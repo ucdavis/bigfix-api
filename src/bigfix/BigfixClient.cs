@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 
 namespace Bigfix
 {
     public class BigfixClient : IDisposable
     {
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string BaseUrl { get; private set; }
         public HttpClient HttpProvider { get; private set; }
 
-        public BigfixClient(string baseUrl = "https://bigfix-master1.ou.ad3.ucdavis.edu:52311/api/")
+        public BigfixClient(string username, string password, string baseUrl = "https://bigfix-master1.ou.ad3.ucdavis.edu:52311/api/")
         {
+            Username = username;
+            Password = password;
+
             // TOOD: workaround because bigfix ssl cert is invalid.  get them to fix
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
 
             HttpProvider = new HttpClient(httpClientHandler);
+
+            var byteArray = Encoding.ASCII.GetBytes($"{Username}:{Password}");
+            HttpProvider.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
             this.BaseUrl = baseUrl;
         }
 
@@ -22,7 +32,8 @@ namespace Bigfix
 
         public void Dispose()
         {
-            if (this.HttpProvider != null) {
+            if (this.HttpProvider != null)
+            {
                 this.HttpProvider.Dispose();
             }
         }
