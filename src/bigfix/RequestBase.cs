@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Bigfix
 {
@@ -34,7 +36,14 @@ namespace Bigfix
             System.Console.WriteLine(resultContent);
 
             // TODO: convert responce into object
-            return default(T);
+            var buffer = Encoding.UTF8.GetBytes(resultContent);
+            using (var stream = new MemoryStream(buffer))
+            {
+                var serializer = new XmlSerializer(typeof(T));
+                var deserializedResponse = (T)serializer.Deserialize(stream);
+
+                return deserializedResponse;
+            }
         }
     }
 }

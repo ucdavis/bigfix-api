@@ -8,11 +8,12 @@ namespace Bigfix
     {
         public ComputerRequests(BigfixClient client) : base(client) { }
 
-        public async Task<ComputerResults> Get(string id)
+        public async Task<ComputerResult> Get(string id)
         {
             this.Url = "computer/" + id;
 
-            return await this.GetAsync<ComputerResults>();
+            var response = await this.GetAsync<ComputerResponse>();
+            return new ComputerResult(response);
         }
     }
 }
