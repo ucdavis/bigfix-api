@@ -13,5 +13,7 @@ namespace Bigfix
             HttpProvider = new HttpClient();
             this.BaseUrl = BaseUrl;
         }
+
+        public ComputerRequests Computers => new ComputerRequests(this);
     }
 }
