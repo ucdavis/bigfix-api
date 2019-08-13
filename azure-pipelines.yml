@@ -1,4 +1,4 @@
-name: 1.0.$(date:yyyyMMdd)-$(rev:.r)
+name: 1.0.$(date:yyyyMMdd)-$(rev:r)
 
 pool:
   name: Hosted Windows 2019 with VS2019
