@@ -1,3 +1,5 @@
+name: 1.0.$(date:yyyyMMdd)-$(rev:.r)
+
 pool:
   name: Hosted Windows 2019 with VS2019
 
@@ -22,7 +24,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: 'src/bigfix/*.csproj'
-    versioningScheme: 'off'
+    versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
   inputs:
