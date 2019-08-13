@@ -19,7 +19,9 @@ namespace tests
 
             Assert.True(true);
 
-            Assert.False(string.IsNullOrEmpty(result.OS));
+            var ip = result.Get(ComputerProperty.IPAddress);
+
+            Assert.False(string.IsNullOrEmpty(ip));
         }
     }
 }

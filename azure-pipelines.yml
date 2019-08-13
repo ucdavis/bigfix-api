@@ -21,6 +21,7 @@ steps:
 #     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: 'pack'
     packagesToPack: 'src/bigfix/*.csproj'
@@ -34,6 +35,7 @@ steps:
     publishLocation: 'Container'
 
 - task: NuGetCommand@2
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
