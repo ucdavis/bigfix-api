@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace Bigfix
 {
@@ -7,26 +6,12 @@ namespace Bigfix
         public ComputerResult(ComputerResponse response)
         {
             AllProperties = response.Properties;
-            OS = response.Properties.SingleOrDefault(r => r.Name.Equals("OS", System.StringComparison.OrdinalIgnoreCase))?.Value;           
         }
 
-        public string OS { get; }
+        public string Get(string prop) {
+            return AllProperties.SingleOrDefault(r => r.Name.Equals(prop, System.StringComparison.OrdinalIgnoreCase))?.Value;
+        }
+
         public BigfixProperty[] AllProperties { get; }
-    }
-
-    [XmlRoot("BESAPI")]
-    public class ComputerResponse
-    {
-        [XmlArray("Computer")]
-        [XmlArrayItem("Property", typeof(BigfixProperty))]
-        public BigfixProperty[] Properties { get; set; }
-    }
-
-    public class BigfixProperty
-    {
-        [XmlAttribute]
-        public string Name { get; set; }
-        [XmlText]
-        public string Value { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Bigfix
             uri.Append(this.Url);
 
             // TODO: remove
-            System.Console.WriteLine(uri.ToString());
+            // System.Console.WriteLine(uri.ToString());
 
             var result = await client.HttpProvider.GetAsync(uri.ToString());
 
@@ -33,9 +33,8 @@ namespace Bigfix
             var resultContent = await result.Content.ReadAsStringAsync();
 
             // TODO: remove
-            System.Console.WriteLine(resultContent);
+            // System.Console.WriteLine(resultContent);
 
-            // TODO: convert responce into object
             var buffer = Encoding.UTF8.GetBytes(resultContent);
             using (var stream = new MemoryStream(buffer))
             {
