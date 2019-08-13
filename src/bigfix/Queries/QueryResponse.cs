@@ -6,17 +6,36 @@ namespace Bigfix
     public class QueryResponse
     {
         [XmlElement("Query")]
-        public QueryResult Query { get; set; }
+        public QueryResultSet Query { get; set; }
     }
 
-    public class QueryResult
+    [XmlRoot("BESAPI")]
+    public class QueryResponseWithTuples
+    {
+        [XmlElement("Query")]
+        public QueryResultSetWithTuples Query { get; set; }
+    }
+
+    public class QueryResultSet
     {
         [XmlArray("Result")]
-        [XmlArrayItem("Answer", typeof(BigfixProperty))]
-        public BigfixAnswer[] Answers { get; set; }
+        [XmlArrayItem("Answer", typeof(QueryAnswer))]
+        public QueryAnswer[] Answers { get; set; }
     }
 
-    public class BigfixAnswer
+    public class QueryResultSetWithTuples
+    {
+        [XmlArray("Result")]
+        [XmlArrayItem("Tuple", typeof(QueryTuple))]
+        public QueryTuple[] Tuples { get; set; }
+    }
+
+    public class QueryTuple {
+        [XmlElement("Answer")]
+        public QueryAnswer[] Answers { get; set; }
+    }
+
+    public class QueryAnswer
     {
         [XmlAttribute]
         public string Type { get; set; }
