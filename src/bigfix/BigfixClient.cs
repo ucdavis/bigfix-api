@@ -29,6 +29,7 @@ namespace Bigfix
         }
 
         public ComputerRequests Computers => new ComputerRequests(this);
+        public QueryRequests Queries => new QueryRequests(this);
 
         public void Dispose()
         {
