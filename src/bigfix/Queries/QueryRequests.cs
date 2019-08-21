@@ -26,10 +26,4 @@ namespace Bigfix
             return new QueryResult(response);
         }
     }
-
-    public class CommonQueryRequests {
-        public string GetComputerByName(string name) {
-            return $"(id of it , name of it) of bes computers whose (name of it equals \"{name}\")";
-        }
-    }
 }
