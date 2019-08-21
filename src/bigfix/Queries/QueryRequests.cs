@@ -5,9 +5,9 @@ namespace Bigfix
 {
     public class QueryRequests : RequestBase
     {
-        public CommonQueryRequests Common { get; set; }
+        public CommonAccessor Common { get; set; }
         public QueryRequests(BigfixClient client) : base(client) {
-            Common = new CommonQueryRequests();
+            Common = new CommonAccessor();
         }
 
         public async Task<QueryResult> Search(string relevance)
@@ -27,9 +27,14 @@ namespace Bigfix
         }
     }
 
-    public class CommonQueryRequests {
-        public string GetComputerByName(string name) {
-            return $"(id of it , name of it) of bes computers whose (name of it equals \"{name}\")";
+    public class CommonAccessor {
+        public CommonQueryRequests Queries { get; set; }
+        public CommonGroupedQueryRequests GroupedQueries { get; set; }
+
+        public CommonAccessor()
+        {
+            Queries = new CommonQueryRequests();
+            GroupedQueries = new CommonGroupedQueryRequests();
         }
     }
 }
