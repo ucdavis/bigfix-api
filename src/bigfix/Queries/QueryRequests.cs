@@ -5,9 +5,9 @@ namespace Bigfix
 {
     public class QueryRequests : RequestBase
     {
-        public CommonQueryRequests Common { get; set; }
+        public CommonAccessor Common { get; set; }
         public QueryRequests(BigfixClient client) : base(client) {
-            Common = new CommonQueryRequests();
+            Common = new CommonAccessor();
         }
 
         public async Task<QueryResult> Search(string relevance)
@@ -24,6 +24,17 @@ namespace Bigfix
 
             var response = await this.GetAsync<QueryResponseWithTuples>();
             return new QueryResult(response);
+        }
+    }
+
+    public class CommonAccessor {
+        public CommonQueryRequests Queries { get; set; }
+        public CommonGroupedQueryRequests GroupedQueries { get; set; }
+
+        public CommonAccessor()
+        {
+            Queries = new CommonQueryRequests();
+            GroupedQueries = new CommonGroupedQueryRequests();
         }
     }
 }
