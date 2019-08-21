@@ -37,7 +37,7 @@ namespace Bigfix
 
     public class QueryAnswer
     {
-        [XmlAttribute]
+        [XmlAttribute("type")]
         public string Type { get; set; }
         [XmlText]
         public string Value { get; set; }
