@@ -98,5 +98,16 @@ namespace tests
             Assert.Equal("172.17.104.160, 169.237.124.0", result.Get(ComputerProperty.SubnetAddress));
 
         }
+
+        [Fact]
+        public async Task CanReturnSingleValue()
+        {
+            var client = new BigfixClient(username, password);
+
+            var result = await client.Computers.Get("1131209333");
+
+            Assert.Equal("169.237.124.0", result.Get(ComputerProperty.SubnetAddress));
+
+        }
     }
 }
