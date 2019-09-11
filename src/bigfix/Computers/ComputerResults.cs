@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Bigfix
@@ -9,6 +10,11 @@ namespace Bigfix
         }
 
         public string Get(string prop) {
+            var temp = AllProperties.Where(r => r.Name.Equals(prop, System.StringComparison.OrdinalIgnoreCase)).ToList();
+            if (temp.Count > 1)
+            {
+                return String.Join(", ", temp.Select(a => a.Value).Distinct().ToArray());
+            }
             return AllProperties.SingleOrDefault(r => r.Name.Equals(prop, System.StringComparison.OrdinalIgnoreCase))?.Value;
         }
 

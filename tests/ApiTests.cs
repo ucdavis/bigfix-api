@@ -87,5 +87,16 @@ namespace tests
 
             Assert.NotEmpty(result.AllAnswers);
         }
+
+        [Fact]
+        public async Task CanReturnMultipleValues()
+        {
+            var client = new BigfixClient(username, password);
+
+            var result = await client.Computers.Get("63725921");
+
+            Assert.Equal("172.17.104.160, 169.237.124.0", result.Get(ComputerProperty.SubnetAddress));
+
+        }
     }
 }
