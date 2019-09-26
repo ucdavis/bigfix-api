@@ -79,6 +79,17 @@ namespace tests
         }
 
         [Fact]
+        public async Task CanUseCaseInsensitiveGroupedQuery()
+        {
+            var client = new BigfixClient(username, password);
+
+            var query = client.Queries.Common.GroupedQueries.GetComputerByNameEquals("caes-7TW1H12");
+            var result = await client.Queries.SearchWithGroupedResults(query);
+
+            Assert.NotEmpty(result.Tuples);
+        }
+
+        [Fact]
         public async Task CanUseCommonSingleQuery()
         {
             var client = new BigfixClient(username, password);
