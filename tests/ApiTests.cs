@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Bigfix;
 using Xunit;
@@ -106,8 +107,20 @@ namespace tests
 
             var result = await client.Computers.Get("1131209333");
 
-            Assert.Equal("169.237.124.0", result.Get(ComputerProperty.SubnetAddress));
+            Assert.Equal("CAES-HWGCQV2-VM", result.Get(ComputerProperty.Name));
 
+        }
+
+        [Fact]
+        public async Task CanThrowNotFound()
+        {
+            var client = new BigfixClient(username, password);
+
+            try {
+                var result = await client.Computers.Get("999999");
+            } catch (BigfixApiException ex) {
+                Assert.Equal(HttpStatusCode.NotFound, ex.StatusCode);
+            }
         }
     }
 }

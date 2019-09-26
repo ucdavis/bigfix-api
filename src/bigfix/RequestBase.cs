@@ -28,20 +28,22 @@ namespace Bigfix
 
             var result = await client.HttpProvider.GetAsync(uri.ToString());
 
-            result.EnsureSuccessStatusCode();
+            if (result.IsSuccessStatusCode) {
+                // TODO: remove
+                // System.Console.WriteLine(resultContent);
 
-            var resultContent = await result.Content.ReadAsStringAsync();
+                var resultContent = await result.Content.ReadAsStringAsync();
 
-            // TODO: remove
-            // System.Console.WriteLine(resultContent);
+                var buffer = Encoding.UTF8.GetBytes(resultContent);
+                using (var stream = new MemoryStream(buffer))
+                {
+                    var serializer = new XmlSerializer(typeof(T));
+                    var deserializedResponse = (T)serializer.Deserialize(stream);
 
-            var buffer = Encoding.UTF8.GetBytes(resultContent);
-            using (var stream = new MemoryStream(buffer))
-            {
-                var serializer = new XmlSerializer(typeof(T));
-                var deserializedResponse = (T)serializer.Deserialize(stream);
-
-                return deserializedResponse;
+                    return deserializedResponse;
+                }
+            } else {
+                throw new BigfixApiException(result.StatusCode, result.ReasonPhrase);
             }
         }
     }
