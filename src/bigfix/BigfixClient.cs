@@ -16,11 +16,7 @@ namespace Bigfix
             Username = username;
             Password = password;
 
-            // TOOD: workaround because bigfix ssl cert is invalid.  get them to fix
-            var httpClientHandler = new HttpClientHandler();
-            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
-
-            HttpProvider = new HttpClient(httpClientHandler);
+            HttpProvider = new HttpClient(new HttpClientHandler());
 
             var byteArray = Encoding.ASCII.GetBytes($"{Username}:{Password}");
             HttpProvider.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
